@@ -14,7 +14,7 @@ echo "${l}"
 
 #generate the walkthrough for all supported os
 function generate_all() {
-	values=(centos7 debian10 ubuntu2004 ubuntu2204 rocky9)
+	values=(debian10 ubuntu2004 ubuntu2204 rocky9)
 	for os in "${values[@]}"; do
   		echo "${os}"
   		 generate ${os}
@@ -38,8 +38,6 @@ if [[ $OS =~ "debian" ]] || [[ $OS =~ "ubuntu" ]] ; then
 	N="ubuntu"
 elif [[ $OS =~ "rocky" ]]  ; then
     N="rocky"
-elif [[ $OS =~ "centos" ]]  ; then
-    N="centos7"
 fi
 echo -en '\n' >> $file
 if ! [[ $OS =~ "rocky" ]]  ; then
@@ -50,9 +48,7 @@ fi
 
 # install java
 N=$OS
-if [[ $OS =~ "centos" ]] ; then
-	N="centos"
-elif [[ $OS =~ "ubuntu1804" ]]  ; then
+if [[ $OS =~ "ubuntu1804" ]]  ; then
 	N="ubuntu1804"
 elif [[ $OS =~ "ubuntu" ]]  ; then
 	N="ubuntu"
@@ -128,24 +124,7 @@ echo -en '\n' >> $file
 N=$OS
 echo -en '\n' >> $file
 echo "# install Postgres" >> $file
-if [[ $N =~ "centos" ]] ; then
-    number=$(sed -n '/#start-postgresql-installation-general/=' $dir/step01_"$OS"_pg_deps.sh)
-    nrs=$((number+1))
-    number=$(sed -n '/#end-postgresql-installation-general/=' $dir/step01_"$OS"_pg_deps.sh)
-    nre=$((number-1))
-    line=$(sed -n ''$nrs','$nre'p' $dir/step01_"$OS"_pg_deps.sh)
-    line="$(echo -e "${line}" | sed -e 's/^[[:space:]]*//')"
-
-    echo "$line"  >> $file
-
-	number=$(sed -n '/#start-recommended/=' $dir/step01_"$OS"_pg_deps.sh)
-	nrs=$((number+1))
-	number=$(sed -n '/#end-recommended/=' $dir/step01_"$OS"_pg_deps.sh)
-	nre=$((number-1))
-	line=$(sed -n ''$nrs','$nre'p' $dir/step01_"$OS"_pg_deps.sh)
-	# remove docker conditional
-	line=`remove_docker_workaround "${line}"`
-elif [[ $OS =~ "rocky" ]]  ; then
+if [[ $OS =~ "rocky" ]]  ; then
     number=$(sed -n '/#start-pg-enabling/=' $dir/step01_rocky9_deps.sh)
     nrs=$((number+1))
     number=$(sed -n '/#end-pg-enabling/=' $dir/step01_rocky9_deps.sh)
@@ -279,40 +258,18 @@ line=$(sed -n ''$ns','$ne'p' $dir/step04_all_omero.sh)
 line=$(echo -e "${line}" | sed -e "s/\-i.bak/-i/g")
 line="$(echo -e "${line}" | sed -e 's/^[[:space:]]*//')"
 echo "$line" >> $file
-if [[ $OS =~ "centos7" ]] ; then
-	echo -en '\n' >> $file
-	number=$(sed -n '/#start-diffie-hellman/=' $dir/step04_centos7_ciphers.sh)
-    ns=$((number))
-    number=$(sed -n '/#end-diffie-hellman/=' $dir/step04_centos7_ciphers.sh)
-    ne=$((number))
-    line=$(sed -n ''$ns','$ne'p' $dir/step04_centos7_ciphers.sh)
-    line="$(echo -e "${line}" | sed -e 's/^[[:space:]]*//')"
-    echo "$line" >> $file
-fi
-
 
 echo -en '\n' >> $file
 
 echo -en '\n' >> $file
 echo "#start-step06: As root, run the scripts to start OMERO automatically" >> $file
 
-if [ $OS = "centos7" ] ; then
-	number=$(sed -n '/#start-recommended/=' $dir/step06_"$OS"_daemon.sh)
-	nrs=$((number+1))
-	number=$(sed -n '/#end-recommended/=' $dir/step06_"$OS"_daemon.sh)
-	nre=$((number-1))
-	line=$(sed -n ''$nrs','$nre'p' $dir/step06_"$OS"_daemon.sh)
-	# remove docker conditional
-	line=`remove_docker_workaround "${line}"`
-	echo "$line" >> $file
-else
-	number=$(sed -n '/#start-recommended/=' $dir/step06_ubuntu_daemon.sh)
-	nrs=$((number+1))
-	number=$(sed -n '/#end-recommended/=' $dir/step06_ubuntu_daemon.sh)
-	nre=$((number-1))
-	line=$(sed -n ''$nrs','$nre'p' $dir/step06_ubuntu_daemon.sh)
-	echo "$line" >> $file
-fi
+number=$(sed -n '/#start-recommended/=' $dir/step06_ubuntu_daemon.sh)
+nrs=$((number+1))
+number=$(sed -n '/#end-recommended/=' $dir/step06_ubuntu_daemon.sh)
+nre=$((number-1))
+line=$(sed -n ''$nrs','$nre'p' $dir/step06_ubuntu_daemon.sh)
+echo "$line" >> $file
 echo "#end-step06" >> $file
 
 echo -en '\n' >> $file
@@ -322,13 +279,6 @@ start=$((start+1))
 line=$(sed -n ''$start',$p' $dir/step07_all_perms.sh)
 echo "$line" >> $file
 echo "#end-step07" >> $file
-
-if [[ $OS =~ "centos" ]]; then
-    echo "#start-selinux" >> $file
-    line=$(sed -n '2,$p' $dir/setup_centos_selinux.sh)
-    echo "$line" >> $file
-    echo "#end-selinux" >> $file
-fi
 
 if [[ $OS =~ "rocky" ]]; then
 	echo "#start-step08: As root, configure" >> $file

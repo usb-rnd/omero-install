@@ -2,7 +2,7 @@
 
 set -e -u -x
 
-ENV=${ENV:-centos7}
+ENV=${ENV:-rockylinux9}
 DMNAME=${DMNAME:-dev}
 
 . `pwd`/../settings.env

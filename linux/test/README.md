@@ -51,7 +51,7 @@ To generate a specific walkthrough, run the following command
     OS=debian10 ALL=false bash autogenerate.sh
 
 The possible values are:
-centos7, ubuntu2004, ubuntu2204, debian10, rocky9 (default)
+ubuntu2004, ubuntu2204, debian10, rocky9 (default)
 
 Configuring Java
 ----------------
@@ -95,8 +95,8 @@ pg13, pg14, pg15
 
 If you do not want to install Postgres set PGVER to nopg.
 
-To add a new Postgres version, update the following files: 
-`step01_centos7_pg_deps.sh`,
+To add a new Postgres version, update the following files:
+`step01_rocky9_deps.sh`,
 `step01_ubuntu2004_pg_deps.sh`, `step01_ubuntu2204_pg_deps.sh`,
 `step01_debian10_pg_deps.sh` and update this README.md.
 

@@ -69,7 +69,7 @@ openjdk1.8, openjdk1.8-devel, openjdk11 (default), openjdk11-devel
 If you do not want to install Java set JAVAVER to nojava.
 
 To add a new Java version, update the following files: 
-`step01_centos_java_deps.sh`, `step01_ubuntu_java_deps.sh`
+`step01_ubuntu_java_deps.sh`
 and update this README.md.
 
 Configuring Postgres

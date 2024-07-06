@@ -7,7 +7,7 @@ https://docs.openmicroscopy.org/latest/omero/sysadmins/unix/server-installation.
 
 Copy the files from this directory, then run one of the install scripts,
 
-	bash install_ubuntu2204.sh
+    bash install_ubuntu2204.sh
     bash install_ubuntu2004.sh
     bash install_rocky9.sh
 

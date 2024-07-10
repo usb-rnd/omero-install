@@ -48,10 +48,10 @@ To generate all the walkthroughs, run the following command
 
 To generate a specific walkthrough, run the following command
 
-    OS=debian10 ALL=false bash autogenerate.sh
+    OS=ubuntu2204 ALL=false bash autogenerate.sh
 
 The possible values are:
-ubuntu2004, ubuntu2204, debian10, rocky9 (default)
+ubuntu2004, ubuntu2204, rocky9 (default)
 
 Configuring Java
 ----------------
@@ -69,8 +69,7 @@ openjdk1.8, openjdk1.8-devel, openjdk11 (default), openjdk11-devel
 If you do not want to install Java set JAVAVER to nojava.
 
 To add a new Java version, update the following files: 
-`step01_centos_java_deps.sh`, `step01_ubuntu_java_deps.sh`,
-`step01_debian10_java_deps.sh`
+`step01_ubuntu_java_deps.sh`
 and update this README.md.
 
 Configuring Postgres
@@ -83,7 +82,7 @@ For example:
     
     PGVER=pg15 ./docker-build.sh rocky9
     
-It is not necessary to specify the version when running Ubuntu/Debian image.
+It is not necessary to specify the version when running Ubuntu image.
 
 For example:
 
@@ -97,8 +96,8 @@ If you do not want to install Postgres set PGVER to nopg.
 
 To add a new Postgres version, update the following files:
 `step01_rocky9_deps.sh`,
-`step01_ubuntu2004_pg_deps.sh`, `step01_ubuntu2204_pg_deps.sh`,
-`step01_debian10_pg_deps.sh` and update this README.md.
+`step01_ubuntu2004_pg_deps.sh`, `step01_ubuntu2204_pg_deps.sh`
+and update this README.md.
 
 Configuring Ice
 ---------------

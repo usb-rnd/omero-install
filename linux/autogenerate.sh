@@ -14,7 +14,7 @@ echo "${l}"
 
 #generate the walkthrough for all supported os
 function generate_all() {
-	values=(debian10 ubuntu2004 ubuntu2204 rocky9)
+	values=(ubuntu2004 ubuntu2204 rocky9)
 	for os in "${values[@]}"; do
   		echo "${os}"
   		 generate ${os}
@@ -34,7 +34,7 @@ set -e -u -x
 EOF
 
 N=$OS
-if [[ $OS =~ "debian" ]] || [[ $OS =~ "ubuntu" ]] ; then
+if [[ $OS =~ "ubuntu" ]] ; then
 	N="ubuntu"
 elif [[ $OS =~ "rocky" ]]  ; then
     N="rocky"
